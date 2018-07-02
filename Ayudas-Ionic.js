@@ -5,7 +5,7 @@ Ir a otra pagina
          block
          color="primary"
          (click)="navegarPagina()">
-    Ir página 2
+    Ir pagina 2
 </button>
 
  navegarPagina(){
@@ -23,7 +23,7 @@ pagina2:any = Pagina2Page;
         block
         color="secondary"
         [navPush]="pagina2">
-   Ir página 2 - HTML
+   Ir pagina 2 - HTML
 </button>
 
 /**********************************************/
@@ -201,29 +201,97 @@ cerrar_con_parametros(){
           block
           color="primary"
           (click)="cerrar_con_parametros()">
-    Cerrar con parámetros
+    Cerrar con parametros
 </button>
 
 <button ion-button
           block
           color="morado"
           (click)="cerrar_sin_parametros()">
-   Cerrar sin parámetros
+   Cerrar sin parametros
  </button>
 
 /**********************************************/
+Cambiar la palabra back en el navController
+
+@NgModule({
+  declarations: [
+  ],
+  imports: [
+    IonicModule.forRoot(MyApp, {
+      backButtonText: 'Atras'
+    })
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+  ],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
+  ]
+})
+
+/********************************************************************/
+Crear Toast Message
 
 
+import { ToastController } from "ionic-angular";
 
+constructor( private toastCtrl:ToastController) { }
 
+private crear_toast( mensaje:string ){
 
+  this.toastCtrl.create({
+    message: mensaje,
+    duration: 2500
+  }).present();
 
+}
 
+/***************************************************************************/
+Forms Ionic 4 Recomendado de la documentacion
 
+import { Component } from '@angular/core';
+import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
+@Component({
+  template: '
+    <form [formGroup]="todo" (ngSubmit)="logForm()">
+      <ion-item>
+        <ion-label floating>Todo</ion-label>
+        <ion-input type="text" formControlName="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Description</ion-label>
+        <ion-textarea formControlName="description"></ion-textarea>
+      </ion-item>
+      <button ion-button type="submit" [disabled]="!todo.valid">Submit</button>
+    </form>
+  '
+})
 
+export class FormsPage {
 
+  private todo : FormGroup;
 
+  constructor( private formBuilder: FormBuilder ) {
+
+    this.todo = this.formBuilder.group({
+      title: ['', Validators.required],
+      description: [''],
+    });
+
+  }
+
+  logForm(){
+    console.log(this.todo.value)
+  }
+
+}
+
+/***************************************************************************/
 
 
 
